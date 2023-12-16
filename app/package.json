@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "app": "nodemon ./index.mjs"
+    "app": "nodemon ./src/index.mjs"
   },
   "keywords": [],
   "author": "",
