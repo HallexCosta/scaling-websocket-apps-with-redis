@@ -6,29 +6,32 @@ services:
     ports:
       - '8080:8080'
     volumes:
-      - ./haproxy:/usr/local/etc/haproxy
+      - ./docker/haproxy:/usr/local/etc/haproxy
+    depends_on:
+      - ws
+    networks:
+      - pub-sub-redis-network
 
-  ws1:
-    image: wsapp
+  ws:
+    # image: wsapp
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
-      - APPID=app-1
-
-  ws2:
-    image: wsapp
-    environment:
-      - APPID=app-2
-
-  ws3:
-    image: wsapp
-    environment:
-      - APPID=app-3
-
-  ws4:
-    image: wsapp
-    environment:
-      - APPID=app-4
+      - DOCKER=true
+    deploy:
+      replicas: 4
+    networks:
+      - pub-sub-redis-network
+    depends_on:
+      - rds
 
   rds:
     image: redis
     ports:
       - '6379:6379'
+    networks:
+      - pub-sub-redis-network
+
+networks:
+  pub-sub-redis-network:
