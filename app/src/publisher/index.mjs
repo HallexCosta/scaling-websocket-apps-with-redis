@@ -1,5 +1,5 @@
+import { APPID } from "../commons/config.mjs";
 import { publisher } from "../commons/get-redis-service.mjs";
-import os from 'node:os'
 
 export function sendMessageToQueue({
   channel, 
@@ -12,7 +12,7 @@ export async function notifyConnections({
   connections,
   message
 }) {
-  connections.forEach(connection => connection.send(`${os.hostname()}: ${message}`))
+  connections.forEach(connection => connection.send(`${APPID}: ${message}`))
   console.log('All sockets notified')
   return true
 }
