@@ -1,5 +1,7 @@
+import os from 'node:os'
+
 const isDocker = process.env.DOCKER == 'true'
-export const APPID = process.env.APPID ?? 'Default';
+export const APPID = os.hostname() ?? process.env.APPID ?? 'Default';
 export const HTTP_PORT = 8080
 export const REDIS_HOST = isDocker ? 'rds' : 'localhost'
 export const REDIS_PORT = 6379
